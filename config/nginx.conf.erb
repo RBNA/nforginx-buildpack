@@ -17,7 +17,7 @@ http {
 
   server_tokens off;
 
-  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id country=$country edgescape=$edgescape_header';
   access_log logs/nginx/access.log l2met;
   error_log logs/nginx/error.log;
 
@@ -46,6 +46,13 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
 
+      set edgescape_header $http_Authorization;
+
+      map $edgescape_header $country {
+          default               "";
+          "~country=(?<country>..)"       "country";
+      }
+
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
         add_header X-Microcachable "0";
@@ -55,10 +62,12 @@ http {
         set $no_cache "1";
       }
 
+
+
       proxy_pass <%= ENV['BENDER_URI'] %>;
       proxy_no_cache $no_cache;
       proxy_cache cache;
-      proxy_cache_key $scheme$host$request_method$request_uri;
+      proxy_cache_key $scheme$host$request_method$request_uri$country;
       proxy_cache_lock on;
       proxy_cache_valid 200 3s;
       proxy_cache_use_stale updating;
