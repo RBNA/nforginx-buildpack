@@ -31,7 +31,7 @@ http {
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
   map $http_X_Akamai_Edgescape $country {
-      default               "";
+      default               "us";
       "~country_code=([A-Z]{2})"       ngx_tolower("$1");
   }
 
