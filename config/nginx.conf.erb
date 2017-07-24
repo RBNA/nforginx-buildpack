@@ -17,7 +17,7 @@ http {
 
   server_tokens off;
 
-  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id country=$country edgescape=$edgescape_header';
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id country=$country edgescape=$http_X_Akamai_Edgescape';
   access_log logs/nginx/access.log l2met;
   error_log logs/nginx/error.log;
 
@@ -30,9 +30,7 @@ http {
 
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
-  set $edgescape_header $http_X_Akamai_Edgescape;
-
-  map $edgescape_header $country {
+  map $http_X_Akamai_Edgescape $country {
       default               "";
       "~country=(?<country>..)"       "country";
   }
