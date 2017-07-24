@@ -46,7 +46,7 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
 
-      set edgescape_header $http_Authorization;
+      set $edgescape_header $http_X_Akamai_Edgescape;
 
       map $edgescape_header $country {
           default               "";
