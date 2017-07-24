@@ -32,9 +32,8 @@ http {
 
   map $http_X_Akamai_Edgescape $country {
       default               "us";
-      "~country_code=([A-Z]{2})"       ngx_tolower("$1");
+      "~country_code=([A-Z]{2})"       "$1";
   }
-
 
   server {
     listen <%= ENV["PORT"] %>;
