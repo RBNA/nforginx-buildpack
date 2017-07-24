@@ -30,6 +30,14 @@ http {
 
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
+  set $edgescape_header $http_X_Akamai_Edgescape;
+
+  map $edgescape_header $country {
+      default               "";
+      "~country=(?<country>..)"       "country";
+  }
+
+
   server {
     listen <%= ENV["PORT"] %>;
     server_name _;
@@ -45,13 +53,6 @@ http {
       }
 
       add_header X-Cache-Status $upstream_cache_status;
-
-      set $edgescape_header $http_X_Akamai_Edgescape;
-
-      map $edgescape_header $country {
-          default               "";
-          "~country=(?<country>..)"       "country";
-      }
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
