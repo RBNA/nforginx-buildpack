@@ -32,7 +32,7 @@ http {
 
   map $http_X_Akamai_Edgescape $country {
       default               "";
-      "~country_code=([A-Z]{2})"       "$1";
+      "~country_code=([A-Z]{2})"       ngx_tolower("$1");
   }
 
 
