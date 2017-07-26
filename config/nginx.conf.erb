@@ -103,7 +103,7 @@ http {
 
     location ~* (session) {
       include cors_support;
-      proxy_pass <%= ENV['COLUMBUS_URI'] %>;
+      proxy_pass <%= ENV['BOXY_URI'] %>;
     }
 
     location ~* (search) {
