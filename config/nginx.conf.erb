@@ -40,8 +40,8 @@ http {
     server_name _;
     #keepalive_timeout 5;
 
-    location /schedule {
-       rewrite ^/v3/schedule(.*) /v3/epg$1 permanent;
+    location ~* (schedule) {
+       rewrite ^/schedule(.*) /epg$1 permanent;
      }
 
     location ~* (collections|live|products|epg|fullproducts|playlists|headers) {
