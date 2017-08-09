@@ -40,7 +40,11 @@ http {
     server_name _;
     #keepalive_timeout 5;
 
-    location ~* (collections|live|products|schedule|fullproducts|playlists|headers) {
+    location /schedule {
+       rewrite ^/schedule(.*) /epg$1 permanent;
+     }
+
+    location ~* (collections|live|products|epg|fullproducts|playlists|headers) {
       include cors_support;
       gzip on;
       set $no_cache "";
