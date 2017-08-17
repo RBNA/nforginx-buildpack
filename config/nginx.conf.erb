@@ -17,7 +17,7 @@ http {
 
   server_tokens off;
 
-  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id country=$country edgescape=$http_X_Akamai_Edgescape';
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id upstream_response_time=$upstream_response_time country=$country edgescape=$http_X_Akamai_Edgescape';
   access_log logs/nginx/access.log l2met;
   error_log logs/nginx/error.log;
 
@@ -40,9 +40,11 @@ http {
     server_name _;
     #keepalive_timeout 5;
 
-    location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
-      rewrite schedule epg permanent;
+    location /schedule {
+       rewrite ^/schedule(.*) http://$server_name/shop/issues/custom_issue_name$1 permanent;
+     }
 
+    location ~* (collections|live|products|epg|fullproducts|playlists|headers) {
       include cors_support;
       gzip on;
       set $no_cache "";
