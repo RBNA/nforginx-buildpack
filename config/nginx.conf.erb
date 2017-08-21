@@ -17,7 +17,30 @@ http {
 
   server_tokens off;
 
-  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id path=$request_uri upstream_response_time=$upstream_response_time country=$country edgescape=$http_X_Akamai_Edgescape user_agent=$http_user_agent status=$status method=$request_method';
+  map $upstream_response_time $urt {
+    default               $upstream_response_time;
+    "-"                   "0.000";
+    ""                    "0.000";
+  }
+
+  map $http_user_agent $ua {
+    default               $http_user_agent;
+    "-"                   "unknown";
+    ""                    "unknown";
+  }
+
+  map $http_X_Akamai_Edgescape $esc {
+    default               $http_X_Akamai_Edgescape;
+    "-"                   "none";
+    ""                    "none";
+  }
+
+  map $http_X_Akamai_Edgescape $country {
+    default               "us";
+    "~country_code=([A-Z]{2})"               "$1";
+  }
+
+  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method"';
   access_log logs/nginx/access.log l2met;
   error_log logs/nginx/error.log;
 
@@ -30,10 +53,7 @@ http {
 
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
-  map $http_X_Akamai_Edgescape $country {
-      default               "us";
-      "~country_code=([A-Z]{2})"       "$1";
-  }
+
 
   server {
     listen <%= ENV["PORT"] %>;
