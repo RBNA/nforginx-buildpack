@@ -40,8 +40,9 @@ http {
     "~country_code=([A-Z]{2})"               "$1";
   }
 
-  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method"';
-  access_log logs/nginx/access.log l2met;
+  #Figure out how to send the nginx logs to logz.io or how to disable access logs on heroku
+  #log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method"';
+  #access_log logs/nginx/access.log l2met;
   error_log logs/nginx/error.log;
 
   include mime.types;
