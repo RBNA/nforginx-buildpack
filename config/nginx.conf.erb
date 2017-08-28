@@ -11,9 +11,6 @@ events {
 
 
 http {
-  gzip on;
-  gzip_comp_level 2;
-  gzip_min_length 512;
 
   server_tokens off;
 
@@ -60,14 +57,19 @@ http {
     server_name _;
     access_log off;
     #keepalive_timeout 5;
+    gzip on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
+    gzip_vary on;
+
 
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
       rewrite schedule epg permanent;
 
       include cors_support;
-      gzip on;
       set $no_cache "";
-
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
       }
@@ -99,8 +101,6 @@ http {
     location ~* (resources) {
       include cors_support;
       set $no_cache "";
-      gzip on;
-
       if ($request_method !~ ^(GET|HEAD)$) {
           set $no_cache "1";
       }
@@ -131,7 +131,6 @@ http {
 
     location ~* (search) {
       include cors_support;
-      gzip on;
       set $no_cache "";
 
       if ($request_method !~ ^(GET|HEAD)$) {
