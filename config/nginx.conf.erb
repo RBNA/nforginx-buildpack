@@ -45,7 +45,7 @@ http {
     default <%= ENV['LOGZ_TOKEN'] %>;
   }
 
-  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" token=$logz_token'
+  log_format l2met '{"measure#nginx.service":$request_time, "request_id":"$http_x_request_id", "token":"$logz_token"}'
   #path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" token=$logz_token';
   #access_log logs/nginx/access.log l2met;
   #error_log logs/nginx/error.log;
