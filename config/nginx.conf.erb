@@ -48,7 +48,7 @@ http {
   log_format l2met '{"request_time":"$request_time", "request_id":"$http_x_request_id", "token":"$logz_token"}';
   #path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" token=$logz_token';
   error_log syslog:server=listener.logz.io:5000 error;
-  access_log syslog:server=listener.logz.io:5000 l2met;
+  access_log syslog:server=listener.logz.io:5000,nohostname l2met;
 
   include mime.types;
   default_type application/octet-stream;
