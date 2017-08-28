@@ -11,10 +11,6 @@ events {
 
 
 http {
-  gzip on;
-  gzip_comp_level 9;
-  #gzip_min_length 512;
-  gzip_types application/json;
 
   server_tokens off;
 
@@ -68,6 +64,11 @@ http {
       include cors_support;
       set $no_cache "";
 
+      gzip on;
+      gzip_comp_level 9;
+      #gzip_min_length 512;
+      gzip_types application/json;
+
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
       }
@@ -99,6 +100,10 @@ http {
     location ~* (resources) {
       include cors_support;
       set $no_cache "";
+      gzip on;
+      gzip_comp_level 9;
+      #gzip_min_length 512;
+      gzip_types application/json;
 
       if ($request_method !~ ^(GET|HEAD)$) {
           set $no_cache "1";
@@ -124,6 +129,10 @@ http {
     }
 
     location ~* (session) {
+      gzip on;
+      gzip_comp_level 9;
+      #gzip_min_length 512;
+      gzip_types application/json;
       include cors_support;
       proxy_pass <%= ENV['BOXY_URI'] %>;
     }
@@ -131,6 +140,10 @@ http {
     location ~* (search) {
       include cors_support;
       set $no_cache "";
+      gzip on;
+      gzip_comp_level 9;
+      #gzip_min_length 512;
+      gzip_types application/json;
 
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
