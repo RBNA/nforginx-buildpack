@@ -49,8 +49,8 @@ http {
   #access_log logs/nginx/access.log l2met;
   #error_log logs/nginx/error.log;
 
-  error_log syslog:server=listener.logz.io:5050 error;
-  access_log syslog:server=listener.logz.io:5050;
+  error_log syslog:server=52.21.71.17:5050 error;
+  access_log syslog:server=52.21.71.17:5050;
 
   include mime.types;
   default_type application/octet-stream;
