@@ -57,6 +57,10 @@ http {
     server_name _;
     access_log off;
     #keepalive_timeout 5;
+    gzip on;
+    gzip_comp_level 6;
+    gzip_vary on;
+    gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
 
 
 
@@ -65,12 +69,6 @@ http {
 
       include cors_support;
       set $no_cache "";
-
-gzip on;
-gzip_comp_level 6;
-gzip_vary on;
-gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
-
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
       }
@@ -102,12 +100,6 @@ gzip_types text/plain text/css application/json application/x-javascript applica
     location ~* (resources) {
       include cors_support;
       set $no_cache "";
-
-gzip on;
-gzip_comp_level 6;
-gzip_vary on;
-gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
-
       if ($request_method !~ ^(GET|HEAD)$) {
           set $no_cache "1";
       }
@@ -132,12 +124,6 @@ gzip_types text/plain text/css application/json application/x-javascript applica
     }
 
     location ~* (session) {
-
-gzip on;
-gzip_comp_level 6;
-gzip_vary on;
-gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
-
       include cors_support;
       proxy_pass <%= ENV['BOXY_URI'] %>;
     }
@@ -145,11 +131,6 @@ gzip_types text/plain text/css application/json application/x-javascript applica
     location ~* (search) {
       include cors_support;
       set $no_cache "";
-
-gzip on;
-gzip_comp_level 6;
-gzip_vary on;
-gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
 
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
