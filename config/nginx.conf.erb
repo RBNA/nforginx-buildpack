@@ -45,10 +45,10 @@ http {
     default <%= ENV['LOGZ_TOKEN'] %>;
   }
 
-  log_format l2met '{"measure#nginx.service":"$request_time", "request_id":"$http_x_request_id", "token":"$logz_token"}';
+  log_format l2met '{"request_time":"$request_time", "request_id":"$http_x_request_id", "token":"$logz_token"}';
   #path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" token=$logz_token';
-  error_log syslog:server=listener.logz.io:5050 error;
-  access_log syslog:server=listener.logz.io:5050 l2met;
+  error_log /dev/stdout error;
+  access_log /dev/stdout l2met;
 
   include mime.types;
   default_type application/octet-stream;
