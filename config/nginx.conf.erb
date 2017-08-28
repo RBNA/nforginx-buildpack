@@ -40,9 +40,17 @@ http {
     "~country_code=([A-Z]{2})"               "$1";
   }
 
-  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method"';
-  access_log logs/nginx/access.log l2met;
-  error_log logs/nginx/error.log;
+
+  map $host $logz_token {
+    default <%= ENV['LOGZ_TOKEN'] %>;
+  }
+
+  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" token="$logz_token"';
+  #access_log logs/nginx/access.log l2met;
+  #error_log logs/nginx/error.log;
+
+  error_log syslog:server=listener.logz.io:5050 error;
+  access_log syslog:server=listener.logz.io:5050;
 
   include mime.types;
   default_type application/octet-stream;
@@ -58,7 +66,7 @@ http {
   server {
     listen <%= ENV["PORT"] %>;
     server_name _;
-    access_log off;
+    #access_log off;
     #keepalive_timeout 5;
 
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
