@@ -35,8 +35,13 @@ http {
     "~country_code=([A-Z]{2})"               "$1";
   }
 
+  # a hack to have the global logz_token nginx var
+  map $host $logz_token {
+    default               <%= ENV["LOGZ_TOKEN"] %>;
+  }
+
   log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method"';
-  log_format syslog '{"measure#nginx.service":"$request_time","request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"gzSLplsgYfniGaSyzKhoKLIZugoRXrrx","@timestamp":"$time_iso8601"}';
+  log_format syslog '{"measure#nginx.service":"$request_time","request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601"}';
   access_log logs/nginx/access.log l2met;
   access_log syslog:server=listener.logz.io:5050 syslog;
   error_log logs/nginx/error.log;
