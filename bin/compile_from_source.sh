@@ -14,7 +14,8 @@ echo "NGINX_VERSION: ${NGINX_VERSION}" >> "$compile_log"
 echo "PCRE_VERSION: ${PCRE_VERSION}" >> "$compile_log"
 echo "HEADERS_MORE_VERSION: ${HEADERS_MORE_VERSION}" >> "$compile_log"
 
-nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+#nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+nginx_tarball_url=https://s3-us-west-2.amazonaws.com/nginx-rbmn/nginx-1.13.0-rbna.tar.gz
 pcre_tarball_url=http://downloads.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
 headers_more_nginx_module_url=https://github.com/agentzh/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
 
