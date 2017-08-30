@@ -40,8 +40,8 @@ http {
     default               <%= ENV["LOGZ_TOKEN"] %>;
   }
 
-  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" host="$host" timestamp="$time_iso8601" cache="$upstream_cache_status"';
-  log_format syslog '{"measure#nginx.service":$request_time,"request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","cache_status":"$upstream_cache_status"}';
+  log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" host="$host" timestamp="$time_iso8601" cache="$upstream_cache_status" upstream_host="$upstream_addr"';
+  log_format syslog '{"measure#nginx.service":$request_time,"request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","cache_status":"$upstream_cache_status","upstream_host":"$upstream_addr"}';
   access_log logs/nginx/access.log l2met;
   access_log syslog:server=listener.logz.io:5050 syslog;
   error_log logs/nginx/error.log;
