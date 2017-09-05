@@ -89,15 +89,14 @@ http {
         set $no_cache "1";
       }
 
-
-
       proxy_pass <%= ENV['BENDER_URI'] %>;
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$country;
       proxy_cache_lock on;
       proxy_cache_valid 200 3s;
-      proxy_cache_use_stale updating;
+      proxy_cache_use_stale error timeout updating http_500 http_502
+                            http_503 http_504;
 
     }
 
@@ -158,7 +157,10 @@ http {
       proxy_cache_key $scheme$host$request_method$request_uri;
       proxy_cache_lock on;
       proxy_cache_valid 200 3s;
-      proxy_cache_use_stale updating;
+      proxy_cache_use_stale error timeout updating http_500 http_502
+                            http_503 http_504;
+
+
 
     }
   }
