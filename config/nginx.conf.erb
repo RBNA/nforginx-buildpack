@@ -41,7 +41,7 @@ http {
   }
 
   log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" host="$host" timestamp="$time_iso8601" cache="$upstream_cache_status" bytes=$bytes_sent';
-  log_format syslog '{"measure#nginx.service":$request_time,"request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","cache_status":"$upstream_cache_status","bytes":$bytes_sent}';
+  log_format syslog '{"measure#nginx.service":$request_time,"request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","type":"rbtv-gsd","cache_status":"$upstream_cache_status","bytes":$bytes_sent}';
   access_log logs/nginx/access.log l2met;
   access_log syslog:server=listener.logz.io:5050 syslog;
   error_log logs/nginx/error.log;
@@ -68,7 +68,6 @@ http {
     gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
     gzip_vary on;
 
-
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
       rewrite schedule epg permanent;
 
@@ -94,10 +93,9 @@ http {
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$country;
       proxy_cache_lock on;
-      proxy_cache_valid 200 3s;
+      proxy_cache_valid 200 5s;
       proxy_cache_use_stale error timeout updating http_500 http_502
                             http_503 http_504;
-
     }
 
 
@@ -123,8 +121,10 @@ http {
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri;
       proxy_cache_lock on;
-      proxy_cache_valid 200 3s;
-      proxy_cache_use_stale updating;
+      proxy_cache_valid 200 30s;
+      proxy_cache_use_stale error timeout updating http_500 http_502
+                            http_503 http_504;
+
     }
 
     location ~* (session) {
@@ -156,11 +156,9 @@ http {
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri;
       proxy_cache_lock on;
-      proxy_cache_valid 200 3s;
+      proxy_cache_valid 200 5s;
       proxy_cache_use_stale error timeout updating http_500 http_502
                             http_503 http_504;
-
-
 
     }
   }
