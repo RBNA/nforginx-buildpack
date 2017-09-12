@@ -68,6 +68,8 @@ http {
     gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
     gzip_vary on;
 
+    limit_req_zone  $binary_remote_addr  zone=default:10m   rate=90r/m;
+
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
       rewrite schedule epg permanent;
 
@@ -76,6 +78,8 @@ http {
       if ($request_method !~ ^(GET|HEAD)$) {
         set $no_cache "1";
       }
+
+      limit_req zone=default burst=30 nodelay;
 
       add_header X-Cache-Status $upstream_cache_status;
 
