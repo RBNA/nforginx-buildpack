@@ -36,7 +36,7 @@ http {
   }
 
   upstream bender {
-    server <%= ENV['BENDER_SERVER'] %> max_conns=1;
+    server <%= ENV['BENDER_URI'] %> max_conns=1;
   }
 
   # a hack to have the global logz_token nginx var
