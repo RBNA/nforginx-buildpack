@@ -35,10 +35,6 @@ http {
     "~country_code=([A-Z]{2})"               "$1";
   }
 
-  upstream bender {
-    server <%= ENV['BENDER_URI'] %> max_conns=1;
-  }
-
   # a hack to have the global logz_token nginx var
   map $host $logz_token {
     default               <%= ENV["LOGZ_TOKEN"] %>;
@@ -92,7 +88,7 @@ http {
         set $no_cache "1";
       }
 
-      proxy_pass http://bender;
+      proxy_pass <%= ENV['BENDER_URI'] %>;
       proxy_read_timeout 5s;
       proxy_no_cache $no_cache;
       proxy_cache cache;
