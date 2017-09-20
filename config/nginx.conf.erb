@@ -65,13 +65,10 @@ http {
 
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
       rewrite schedule epg permanent;
-
-      proxy_read_timeout 5s;
-      
+ 
       include cors_support;
       set $no_cache "";
       if ($request_method !~ ^(GET|HEAD)$) {
-        proxy_read_timeout 20s;
         set $no_cache "1";
       }
 
@@ -87,6 +84,10 @@ http {
       }
 
       proxy_pass <%= ENV['BENDER_URI'] %>;
+      proxy_read_timeout 5s;
+      if ($request_method !~ ^(GET|HEAD)$) {
+         proxy_read_timeout 20s;
+      }
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$country;
