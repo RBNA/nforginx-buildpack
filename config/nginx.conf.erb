@@ -41,8 +41,8 @@ http {
     ""                    "none";
   }
 
-  map $http_X-User-Country $xusercountry {
-    default               $http_X-User-Country;
+  map $http_X_User_Country $xusercountry {
+    default               $http_X_User_Country;
     "-"                   "none";
     ""                    "none";
   }
@@ -53,7 +53,7 @@ http {
   }
 
   log_format l2met 'measure#nginx.service=$request_time request_id="$http_x_request_id" path="$request_uri" upstream_response_time=$urt country="$country" edgescape="$esc" user_agent="$ua" status=$status method="$request_method" host="$host" timestamp="$time_iso8601" cache="$upstream_cache_status" bytes=$bytes_sent upstream_host="$proxy_host" referrer=$http_referer auth=$http_authorization';
-  log_format syslog '{"measure#nginx.service":$request_time,"type":"rbtv-gsd","request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","$xclientdata":"$xclientdata","xusercountry":"$xusercountry","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","cache_status":"$upstream_cache_status","bytes":$bytes_sent,"upstream_host":"$proxy_host","referer":"$http_referer","authorization":"$http_authorization"}';
+  log_format syslog '{"measure#nginx.service":$request_time,"type":"rbtv-gsd","request_id":"$http_x_request_id","path":"$request_uri","upstream_response_time":$urt,"country":"$country","edgescape":"$esc","xclientdata":"$xclientdata","xusercountry":"$xusercountry","user_agent":"$ua","status":$status,"method":"$request_method","token":"$logz_token","@timestamp":"$time_iso8601","host":"$host","cache_status":"$upstream_cache_status","bytes":$bytes_sent,"upstream_host":"$proxy_host","referer":"$http_referer","authorization":"$http_authorization"}';
   access_log logs/nginx/access.log l2met;
   access_log syslog:server=listener.logz.io:5050 syslog;
   error_log logs/nginx/error.log;
