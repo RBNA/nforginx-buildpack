@@ -125,9 +125,6 @@ http {
 
     location ~* (session) {
       include cors_support;
-      add_header Access-Control-Allow-Headers "Authorization,Content-Type,X-User-Country,X-Client-Data,X-Locale";
-      add_header Access-Control-Allow-Origin "*";
-      add_header Content-Type "application/json";
       proxy_pass <%= ENV['BOXY_URI'] %>;
     }
 
