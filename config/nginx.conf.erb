@@ -73,6 +73,7 @@ http {
       }
 
       add_header X-Cache-Status $upstream_cache_status;
+      add_header Access-Control-Allow-Methods "GET,OPTIONS";
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -91,7 +92,6 @@ http {
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      add_header access-control-allow-methods "GET,OPTIONS";
     }
 
 
@@ -111,6 +111,8 @@ http {
         set $no_cache "1";
       }
 
+      add_header Access-Control-Allow-Methods "GET,OPTIONS";
+
       proxy_no_cache $no_cache;
 
       proxy_pass <%= ENV['DEWEY_URI'] %>;
@@ -119,7 +121,6 @@ http {
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      add_header access-control-allow-methods "GET,OPTIONS";
     }
 
     location ~* (session) {
@@ -136,6 +137,7 @@ http {
       }
 
       add_header X-Cache-Status $upstream_cache_status;
+      add_header Access-Control-Allow-Methods "GET,OPTIONS";
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -153,7 +155,6 @@ http {
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-      add_header access-control-allow-methods "GET,OPTIONS";
     }
   }
 }
