@@ -78,7 +78,6 @@ http {
       }
 
       add_header X-Cache-Status $upstream_cache_status;
-      add_header Access-Control-Allow-Methods "GET,OPTIONS";
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -116,8 +115,6 @@ http {
         set $no_cache "1";
       }
 
-      add_header Access-Control-Allow-Methods "GET,OPTIONS";
-
       proxy_no_cache $no_cache;
 
       proxy_cache cache;
@@ -142,7 +139,6 @@ http {
       }
 
       add_header X-Cache-Status $upstream_cache_status;
-      add_header Access-Control-Allow-Methods "GET,OPTIONS";
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
