@@ -79,7 +79,7 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      add_header X-Locale $locale;
+      #add_header X-Locale $locale;
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -118,7 +118,7 @@ http {
       }
 
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      add_header X-Locale $locale;
+      #add_header X-Locale $locale;
 
       proxy_no_cache $no_cache;
 
@@ -132,7 +132,7 @@ http {
 
     location ~* (session) {
       include cors_support;
-      add_header X-Locale $locale;
+      #add_header X-Locale $locale;
       proxy_pass <%= ENV['BOXY_URI'] %>;
     }
 
@@ -146,7 +146,7 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      add_header X-Locale $locale;
+      #add_header X-Locale $locale;
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
