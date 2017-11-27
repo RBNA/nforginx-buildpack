@@ -79,7 +79,6 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      #add_header X-Locale $locale;
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
@@ -90,12 +89,12 @@ http {
         set $no_cache "1";
       }
 
-      proxy_no_cache $no_cache;
-      proxy_cache cache;
-      proxy_cache_key $scheme$host$request_method$request_uri$country$locale;
-      proxy_cache_lock on;
-      proxy_cache_valid 200 45s;
-      proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      #proxy_no_cache $no_cache;
+      #proxy_cache cache;
+      #proxy_cache_key $scheme$host$request_method$request_uri$country$locale;
+      #proxy_cache_lock on;
+      #proxy_cache_valid 200 45s;
+      #proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
       proxy_pass <%= ENV['BENDER_URI'] %>;
       proxy_read_timeout 10s;
     }
@@ -118,7 +117,6 @@ http {
       }
 
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      #add_header X-Locale $locale;
 
       proxy_no_cache $no_cache;
 
@@ -132,7 +130,6 @@ http {
 
     location ~* (session) {
       include cors_support;
-      #add_header X-Locale $locale;
       proxy_pass <%= ENV['BOXY_URI'] %>;
     }
 
@@ -146,7 +143,6 @@ http {
 
       add_header X-Cache-Status $upstream_cache_status;
       add_header Access-Control-Allow-Methods "GET,OPTIONS";
-      #add_header X-Locale $locale;
 
       if ($no_cache = "1") {
         add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
