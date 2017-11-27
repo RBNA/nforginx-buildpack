@@ -90,14 +90,14 @@ http {
         set $no_cache "1";
       }
 
-      proxy_pass <%= ENV['BENDER_URI'] %>;
-      proxy_read_timeout 10s;
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$country$locale;
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_pass <%= ENV['BENDER_URI'] %>;
+      proxy_read_timeout 10s;
     }
 
 
@@ -122,12 +122,12 @@ http {
 
       proxy_no_cache $no_cache;
 
-      proxy_pass <%= ENV['DEWEY_URI'] %>;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$locale;
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_pass <%= ENV['DEWEY_URI'] %>;
     }
 
     location ~* (session) {
@@ -157,13 +157,13 @@ http {
         set $no_cache "1";
       }
 
-      proxy_pass <%= ENV['SEARCH_URI'] %>;
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri$locale;
       proxy_cache_lock on;
       proxy_cache_valid 200 45s;
       proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+      proxy_pass <%= ENV['SEARCH_URI'] %>;
     }
   }
 }
