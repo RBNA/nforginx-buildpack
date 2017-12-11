@@ -56,12 +56,8 @@ http {
     listen <%= ENV["PORT"] %>;
     server_name api-staging.redbull.tv api-qa.redbull.tv api.redbull.tv;
 
-    if ($host != "api-staging.redbull.tv") {
-      if ($host != "api-qa.redbull.tv") {
-        if ($host != "api.redbull.tv") {
-            return 444;
-        }
-      }
+    if ($host !~ (api-staging.redbull.tv|api-qa.redbull.tv|api.redbull.tv) {
+      return 444;
     }
 
     #keepalive_timeout 5;
