@@ -56,7 +56,7 @@ http {
     listen <%= ENV["PORT"] %>;
     server_name api-staging.redbull.tv api-qa.redbull.tv api.redbull.tv;
 
-    if ($host !~ (api-staging.redbull.tv|api-qa.redbull.tv|api.redbull.tv) {
+    if ($host !~ (api-staging.redbull.tv|api-qa.redbull.tv|api.redbull.tv)) {
       return 444;
     }
 
