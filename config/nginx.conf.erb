@@ -55,10 +55,11 @@ http {
 
   # Default server
   server {
-    #listen <%= ENV["PORT"] %> default_server;
-    #server_name  _; # some invalid name that won't match anything
+    listen <%= ENV["PORT"] %>;
+    server_name  _; # some invalid name that won't match anything
     return 444;
   }
+
   # Other servers
-  include /etc/nginx/config/*.conf;
+  include *.conf;
 }
