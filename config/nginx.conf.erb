@@ -55,7 +55,7 @@ http {
 
   # Default server
   server {
-    listen 80 default_server;
+    listen <%= ENV["PORT"] %> default_server;
     server_name  _; # some invalid name that won't match anything
     return 444;
   }
