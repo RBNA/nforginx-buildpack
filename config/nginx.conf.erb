@@ -40,8 +40,8 @@ http {
     default               <%= ENV["LOGZ_TOKEN"] %>;
   }
 
-  # a hack to have the global server_port nginx var
-  map $host $server_port {
+  # a hack to have the global my_port nginx var
+  map $host $my_port {
     default                 <%= ENV["PORT"] %>;
   }
 
