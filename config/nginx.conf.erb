@@ -52,14 +52,5 @@ http {
 
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
-
-  # Default server
-  server {
-    listen <%= ENV["PORT"] %> default_server;
-    server_name  _; # some invalid name that won't match anything
-    return 444;
-  }
-
-  # Other servers
-  include *.conf;
+  include /servers/*;
 }
