@@ -160,10 +160,10 @@ http {
     }
   }
 
-    server {
-        listen       <%= ENV["PORT"] %>  default_server;
-        server_name  _;
-        return       444;
-    }
+  server {
+    listen       <%= ENV["PORT"] %>  default_server;
+    server_name  _;
+    return       444;
+  }
 
 }
