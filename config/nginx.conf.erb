@@ -158,4 +158,12 @@ http {
 
     }
   }
+
+  server {
+      listen <%= ENV["PORT"] %> default;
+      server_name "";
+      return      444;
+  }
+
+
 }
