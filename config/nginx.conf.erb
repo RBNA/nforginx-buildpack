@@ -54,7 +54,7 @@ http {
 
   server {
     listen <%= ENV["PORT"] %>;
-    server_name api-staging.redbull.tv www.api-qa.redbull.tv api.redbull.tv;
+    server_name <%= ENV["SERVER_NAME"] %>;
     #keepalive_timeout 5;
     gzip on;
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
@@ -93,7 +93,6 @@ http {
       proxy_cache_use_stale error timeout updating http_500 http_502
                             http_503 http_504;
     }
-
 
     location ~* (resources) {
       include cors_support;
@@ -163,6 +162,5 @@ http {
       server_name "";
       return      444;
   }
-
 
 }
