@@ -54,7 +54,7 @@ http {
 
   server {
     listen <%= ENV["PORT"] %>;
-    server_name api-staging.redbull.tv;
+    server_name _;
     #keepalive_timeout 5;
     gzip on;
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
@@ -62,6 +62,10 @@ http {
     gzip_comp_level 6;
     gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/rss+xml text/javascript image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype;
     gzip_vary on;
+
+    if ($host !~ (api-staging.redbull.tv|api-qa.redbull.tv|api.redbull.tv) {
+      return 444;
+    }
 
     location ~* (collections|live|products|epg|schedule|fullproducts|playlists|headers) {
       rewrite schedule epg permanent;
@@ -158,5 +162,4 @@ http {
 
     }
   }
-
 }
