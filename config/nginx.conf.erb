@@ -53,8 +53,8 @@ http {
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
   server {
-    server_name api-staging.redbull.tv api-qa.redbull.tv api.redbull.tv;
-
+    server_name api-staging.redbull.tv;
+    listen <%= ENV["PORT"] %>;
     #keepalive_timeout 5;
     gzip on;
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
@@ -157,12 +157,6 @@ http {
                             http_503 http_504;
 
     }
-  }
-
-  server {
-    listen       <%= ENV["PORT"] %>  default_server;
-    server_name  _;
-    return       444;
   }
 
 }
