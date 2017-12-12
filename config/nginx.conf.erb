@@ -54,13 +54,13 @@ http {
 
   server {
       listen <%= ENV["PORT"] %> default;
-      server_name "";
+      server_name _;
       return      444;
   }
 
   server {
     listen <%= ENV["PORT"] %>;
-    server_name _;
+    server_name api-staging.redbull.tv www.api-staging.redbull.tv *.api-staging.redbull.tv;
     #keepalive_timeout 5;
     gzip on;
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
