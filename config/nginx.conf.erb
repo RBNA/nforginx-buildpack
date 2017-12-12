@@ -53,12 +53,6 @@ http {
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
   server {
-      listen       <%= ENV["PORT"] %>  default_server;
-      server_name  _;
-      return       444;
-  }
-
-  server {
     listen <%= ENV["PORT"] %>;
     server_name api-staging.redbull.tv api-qa.redbull.tv api.redbull.tv;
 
@@ -165,4 +159,11 @@ http {
 
     }
   }
+
+    server {
+        listen       <%= ENV["PORT"] %>  default_server;
+        server_name  _;
+        return       444;
+    }
+
 }
