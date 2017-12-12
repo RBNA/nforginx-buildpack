@@ -53,7 +53,7 @@ http {
   proxy_cache_path /app/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
   server {
-    listen <%= ENV["PORT"] %>;
+    listen <%= ENV["PORT"] %> default;
     server_name _;
     #keepalive_timeout 5;
     gzip on;
