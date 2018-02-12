@@ -9,7 +9,7 @@ if ($request_method = 'GET') {
 }
 
 if ($request_method = 'POST') {
-    if ($request_uri ~ ^/v3/session$) {    
+    if ($request_uri ~ ^/v3/session) {    
         add_header 'Access-Control-Allow-Origin' '*' always;
         add_header 'Access-Control-Allow-Headers' 'Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Max-Age,Origin,X-Requested-With,Content-Type,Accept,Authorization,X-Locale,Content-Type';
 
