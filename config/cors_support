@@ -8,16 +8,14 @@ if ($request_method = 'GET') {
 		add_header 'X-Robots-Tag' 'noindex' always;
 }
 
-if ($request_method = 'POST') {
-    if ($request_uri ~ ^/v3/session) {    
-        add_header 'Access-Control-Allow-Origin' '*' always;
-        add_header 'Access-Control-Allow-Headers' 'Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Max-Age,Origin,X-Requested-With,Content-Type,Accept,Authorization,X-Locale,Content-Type';
+if ($request_uri ~ ^/v3/session) {    
+    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header 'Access-Control-Allow-Headers' 'Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Access-Control-Allow-Methods,Access-Control-Max-Age,Origin,X-Requested-With,Content-Type,Accept,Authorization,X-Locale,Content-Type';
 
-        add_header 'Access-Control-Allow-Methods' 'GET,POST' always;
+    add_header 'Access-Control-Allow-Methods' 'GET,POST' always;
 
-		    add_header 'Last-Modified' $date_gmt always;
-		    add_header 'X-Robots-Tag' 'noindex' always;
-    }
+    add_header 'Last-Modified' $date_gmt always;
+    add_header 'X-Robots-Tag' 'noindex' always;
 }
 
 if ($request_method = 'OPTIONS') {
